@@ -20,11 +20,13 @@ import axiosClient from '../config/axios';
 import Swal from 'sweetalert2';
 //Create new product - primary function
 
+const url = 'https://my-json-server.typicode.com/fabianquirola/crud_redux_db/books';
+
 export function createNewProductAction(product){
     return (dispatch)=>{
         dispatch(newProduct());
 
-        axiosClient.post('/books',product)
+        axiosClient.post(url,product)
         .then(response =>{
             console.log(response);
             dispatch(addProductSuccess(product))
@@ -60,7 +62,7 @@ export const addProductError = error => ({
 export function getProductsAction () {
     return (dispatch) =>{
         dispatch(getProductsBegin());
-        axiosClient.get('/books')
+        axiosClient.get(url)
         .then(response =>{
             dispatch(loadingProductsSuccess(response.data));
 
@@ -91,7 +93,7 @@ export const deleteProductAction = (id) => {
 
         //delete from api
 
-        axiosClient.delete(`/books/${id}`)
+        axiosClient.delete(`${url}/${id}`)
         .then(response =>{
             console.log()
             dispatch(deleteProductSuccess(id));
@@ -126,7 +128,7 @@ export function getProductUpdateAction (id) {
     return(dispatch)=>{
         dispatch(getProductAction());
 
-        axiosClient.get(`/books/${id}`)
+        axiosClient.get(`${url}/${id}`)
         .then(response =>{
             dispatch(updateProductSuccess(response.data))
 
@@ -157,7 +159,7 @@ export function updateProductAction(product){
      dispatch(beginProductUpdated());
 
      //consult api
-     axiosClient.put(`/books/${product.id}`,product)
+     axiosClient.put(`${url}/${product.id}`,product)
         .then(response =>{
             console.log(response);
             dispatch(updatedProductSuccess(response.data));

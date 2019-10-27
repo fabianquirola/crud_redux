@@ -43,7 +43,7 @@ const UpdateProduct = ({match,history}) => {
 
        validateForm();
 
-       if(nameRef.current.value.trim() === '' || priceRef.current.value == '' ){
+       if(nameRef.current.value.trim() === '' || priceRef.current.value === '' ){
            errorValidation();
            return;
        }
@@ -58,11 +58,6 @@ const UpdateProduct = ({match,history}) => {
             price: priceRef.current.value
         });
 
-        Swal.fire(
-            'Saved',
-            'Product stored correctly',
-            'success',
-        );
 
         history.push('/');
     }
