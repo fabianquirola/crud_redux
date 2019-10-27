@@ -111,7 +111,7 @@ export default function(state = initialState,action){
                 return{
                     ...state,
                     error:null,
-                    products: state.products.map(product=> product.id=== action.payload.id? product = action.payload:product)
+                    products: state.products.map(product=> product.id === action.payload.id ? product = action.payload : product)
                 }
         case PRODUCT_UPDATED_ERROR:
                 return{

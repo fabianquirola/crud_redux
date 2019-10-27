@@ -5,8 +5,10 @@ import React,{useEffect,Fragment, useRef} from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {getProductUpdateAction,updateProductAction,} from '../actions/productsActions'
 
+import { validateFormAction,validationSuccess,validationError } from '../actions/validationActions';
+import Swal from 'sweetalert2';
 
-const UpdateProduct = ({match}) => {
+const UpdateProduct = ({match,history}) => {
 
     //create refs
     const nameRef = useRef('');
@@ -18,9 +20,13 @@ const UpdateProduct = ({match}) => {
 
     const editProduct = (product)=> dispatch (updateProductAction(product));
 
+    const validateForm = () => dispatch(validateFormAction());
+    const successValidation = () => dispatch(validationSuccess());
+    const errorValidation = () => dispatch(validationError());
+
     const {id} = match.params
 
-    
+
 
     useEffect(()=>{
         dispatch(getProductUpdateAction(id))
@@ -32,13 +38,33 @@ const UpdateProduct = ({match}) => {
     if(!product) return 'Cargando...';
 
     const submitProductUpdate= e =>{
-        e.preventDegault();
+        e.preventDefault();
         // validate form
 
-        // no error
+       validateForm();
 
+       if(nameRef.current.value.trim() === '' || priceRef.current.value == '' ){
+           errorValidation();
+           return;
+       }
+
+        // no error
+       successValidation();
         //save changes
 
+        editProduct({
+            id,
+            name: nameRef.current.value,
+            price: priceRef.current.value
+        });
+
+        Swal.fire(
+            'Saved',
+            'Product stored correctly',
+            'success',
+        );
+
+        history.push('/');
     }
 
     return ( 

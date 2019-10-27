@@ -2,13 +2,13 @@
   "books": [
     {
       "id": 1,
-      "name": "Aprendiendo Redux",
-      "price": 16.4
+      "name": "Aprendiendo React v7",
+      "price": "16.4"
     },
     {
       "id": 2,
-      "name": "Aprendiendo Redux EEE",
-      "price": 18.4
+      "name": "Aprendiendo Redux v2",
+      "price": "18.4"
     },
     {
       "name": "Bases de pp",

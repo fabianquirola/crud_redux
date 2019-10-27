@@ -17,7 +17,7 @@ import {
 } from '../types';
 
 import axiosClient from '../config/axios';
-
+import Swal from 'sweetalert2';
 //Create new product - primary function
 
 export function createNewProductAction(product){
@@ -28,7 +28,11 @@ export function createNewProductAction(product){
         .then(response =>{
             console.log(response);
             dispatch(addProductSuccess(product))
-
+            Swal.fire(
+                'Saved',
+                'Product stored correctly',
+                'success',
+            );
         })
         .catch(error => {
             console.log(error);
@@ -150,10 +154,31 @@ export const updateProductError = ()=>({
 
 export function updateProductAction(product){
  return (dispatch)=>{
-     dispatch();
+     dispatch(beginProductUpdated());
+
+     //consult api
+     axiosClient.put(`/books/${product.id}`,product)
+        .then(response =>{
+            console.log(response);
+            dispatch(updatedProductSuccess(response.data));
+            
+        })
+        .catch(error=>{
+            console.log(error); 
+            dispatch(updatedProductError());
+        })
  }
 }
 
 export const beginProductUpdated = ()=>({
     type: BEGIN_PRODUCT_UPDATED,
+})
+
+export const updatedProductSuccess = product =>({
+    type: PRODUCT_UPDATED_SUCCESS,
+    payload: product
+})
+
+export const updatedProductError = () =>({
+    type: PRODUCT_UPDATED_ERROR,
 })
